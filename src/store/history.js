@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import { logger } from './logger.js';
+import { logger } from '../logger.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -30,7 +30,7 @@ export class HistoryStore {
       'INSERT INTO approval_history (request_id, event_type, message, action) VALUES (?, ?, ?, ?)'
     );
     stmt.run(requestId, eventType, message, action);
-    logger.info(`History record added: ${request_id} - ${action}`);
+    logger.info(`History record added: ${requestId} - ${action}`);
   }
 
   getHistory(limit = 10) {

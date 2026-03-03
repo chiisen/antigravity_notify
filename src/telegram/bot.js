@@ -8,7 +8,15 @@ export class TelegramBot {
     this.chatId = process.env.TELEGRAM_CHAT_ID;
     this.pendingRequests = new Map();
     this.historyStore = new HistoryStore();
+    this.approvedKeywords = (process.env.APPROVED_KEYWORDS || 'yes,y,approve,ok,好,確認,同意').split(',');
+    this.deniedKeywords = (process.env.DENIED_KEYWORDS || 'no,n,deny,reject,不要,拒絕,不同意').split(',');
+    this.requireWhitelist = process.env.REQUIRE_WHITELIST === 'true';
     this.setupCommands();
+  }
+
+  isKeywordAllowed(text, keywords) {
+    if (!this.requireWhitelist) return true;
+    return keywords.includes(text);
   }
 
   setupCommands() {
@@ -50,12 +58,18 @@ export class TelegramBot {
 
     this.bot.on('text', (ctx) => {
       const text = ctx.message.text.toLowerCase().trim();
-      const approvedKeywords = ['yes', 'y', 'approve', 'ok', '好', '確認', '同意'];
-      const deniedKeywords = ['no', 'n', 'deny', 'reject', '不要', '拒絕', '不同意'];
 
-      if (approvedKeywords.includes(text)) {
+      if (this.approvedKeywords.includes(text)) {
+        if (!this.isKeywordAllowed(text, this.approvedKeywords)) {
+          ctx.reply('⚠️ 指令不在白名單中，請使用 Inline 按鈕核准');
+          return;
+        }
         this.handleLastPendingRequest(ctx, 'approve');
-      } else if (deniedKeywords.includes(text)) {
+      } else if (this.deniedKeywords.includes(text)) {
+        if (!this.isKeywordAllowed(text, this.deniedKeywords)) {
+          ctx.reply('⚠️ 指令不在白名單中，請使用 Inline 按鈕拒絕');
+          return;
+        }
         this.handleLastPendingRequest(ctx, 'deny');
       }
     });
