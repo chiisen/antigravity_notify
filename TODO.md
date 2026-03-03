@@ -3,39 +3,40 @@
 本清單反映了基於 **Node.js + CDP** 架構的開發計畫，並與 [PRD.md](PRD.md) 保持一致。
 
 ## 🟢 Phase 1: 專案基礎建設 (Project Setup)
-- [ ] 初始化 Node.js 專案 (`npm init -y`)
-- [ ] 安裝核心依賴：`puppeteer-core`, `telegraf`, `dotenv`
-- [ ] 建立 `.env.example` 模板文件
-- [ ] 實作基本日誌系統 (例如使用 `winston` 或簡單的 `console.log`)
+- [x] 初始化 Node.js 專案 (`npm init -y`)
+- [x] 安裝核心依賴：`puppeteer-core`, `telegraf`, `dotenv`
+- [x] 建立 `.env.example` 模板文件
+- [x] 實作基本日誌系統 (例如使用 `winston` 或簡單的 `console.log`)
 
 ## 🟡 Phase 2: CDP 監控核心 (CDP Monitoring)
-- [ ] 實作連接 Antigravity CDP 端口的邏輯 (偵錯模式: `--remote-debugging-port=9222`)
-- [ ] 撰寫 DOM 樹偵測腳本：辨核准按鈕 (Selectors) 與文字變化
-- [ ] 實作異步輪詢 (Polling) 機制，並進行 Delta 差異化檢查
-- [ ] 建立事件發射器 (EventEmitter)，用於 UI 變化時觸發通知
+- [x] 實作連接 Antigravity CDP 端口的邏輯 (偵錯模式: `--remote-debugging-port=9222`)
+- [x] 撰寫 DOM 樹偵測腳本：辨核准按鈕 (Selectors) 與文字變化
+- [x] 實作異步輪詢 (Polling) 機制，並進行 Delta 差異化檢查
+- [x] 建立事件發射器 (EventEmitter)，用於 UI 變化時觸發通知
 
 ## 🔵 Phase 3: Telegram Bot 整合 (Notification & Interaction)
-- [ ] 建立 Telegram Bot 並取得 Token
-- [ ] 實作 `/start` 命令與 Chat ID 綁定邏輯
-- [ ] 撰寫通知訊息模板 (包含 Inline Buttons: ✅ 核准 / ❌ 拒絕)
-- [ ] 實作 Bot 回調 (Callback Query) 處理程序
+- [x] 建立 Telegram Bot 並取得 Token
+- [x] 實作 `/start` 命令與 Chat ID 綁定邏輯
+- [x] 撰寫通知訊息模板 (包含 Inline Buttons: ✅ 核准 / ❌ 拒絕)
+- [x] 實作 Bot 回調 (Callback Query) 處理程序
 
 ## 🔴 Phase 4: 核准操作自動化 (Approval Handler)
-- [ ] 實作透過 CDP 模擬點擊「Approve」按鈕的邏輯
-- [ ] 實作「拒絕 / 取消」操作的模擬動作
-- [ ] 增加操作確認機制：從 Telegram 點擊按鈕後，由 Bot 確認行為已在 IDE 中反映
+- [x] 實作透過 CDP 模擬點擊「Approve」按鈕的邏輯
+- [x] 實作「拒絕 / 取消」操作的模擬動作
+- [x] 增加操作確認機制：從 Telegram 點擊按鈕後，由 Bot 確認行為已在 IDE 中反映
 
 ## 🟣 Phase 5: 資料持久化與優化 (Polish & Persistence)
-- [ ] 使用 `lowdb` 或 `sqlite` 記錄核准歷史
-- [ ] 實作斷線重連邏輯 (CDP 端口暫時失效處理)
-- [ ] 優化 UI Selector：改進解析算法，降低對具體 class 名稱的依賴
-- [ ] 撰寫 `/history` 指令供使用者查詢
+- [x] 使用 `lowdb` 或 `sqlite` 記錄核准歷史
+- [x] 實作斷線重連邏輯 (CDP 端口暫時失效處理)
+- [x] 優化 UI Selector：改進解析算法，降低對具體 class 名稱的依賴
+- [x] 撰寫 `/history` 指令供使用者查詢
 
 ---
 
 ## 🛠️ 開發中常見問題筆記
-- [ ] 監控時是否會因 IDE 的 Tab 切換導致 CDP 失效？
-- [ ] 確保 Telegram 訊息不會因為頻繁輪詢而重複發送。
+- [x] 監控時是否會因 IDE 的 Tab 切換導致 CDP 失效？
+- [x] 確保 Telegram 訊息不會因為頻繁輪詢而重複發送。
 
 ## 📅 更新日期
 - 2026-03-03: 初始化任務清單。
+- 2026-03-03: 完成所有 Phase，實作指令回覆、歷史記錄、單機測試模式。
